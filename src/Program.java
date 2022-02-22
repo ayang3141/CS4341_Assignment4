@@ -17,10 +17,10 @@ public class Program {
         double stepSize = 0.1;
         double discount = 0.9;
 
-        System.out.println(fileName);
-        System.out.println(MAXRUNTIME);
-        System.out.println(intendedProb);
-        System.out.println(actionReward);
+//        System.out.println(fileName);
+//        System.out.println(MAXRUNTIME);
+//        System.out.println(intendedProb);
+//        System.out.println(actionReward);
 
 
 
@@ -36,30 +36,28 @@ public class Program {
         double[][][] qTable = new double[numRows][numCols][4];
 
 
-
+        // ----- Q LEARNING ALGORITHM STARTS -------
 
         boolean TIME_LEFT = true;   // if there is still time left
-        long startTime = System.nanoTime(); //
-        // loop until time is over or terminal state is found
-        int iterationNum = 1;
-        while(TIME_LEFT) {
+        long startTime = System.nanoTime(); // get the starting time
+
+        while(TIME_LEFT) { // while there is still time left
             // start at a random location on the board
             Coordinate current = rewardMatrix.generateStartPoint();
 
-            // while a terminal state has not been found yet
-            boolean terminalStateFound = false;
-            while(!terminalStateFound && TIME_LEFT) {
-                if(rewardMatrix.checkTerminal(current)) {
-                    terminalStateFound = !terminalStateFound;
+            while(TIME_LEFT) { // loop until a terminal state has been found or time runs out
 
+                // if the current coordinate (or state) is a terminal state
+                if(rewardMatrix.checkTerminal(current)) {
+                    // set the terminal state to its respective reward
                     qTable[current.getX()][current.getY()][0] = rewardMatrix.getRewardValue(current);
                     qTable[current.getX()][current.getY()][1] = rewardMatrix.getRewardValue(current);
                     qTable[current.getX()][current.getY()][2] = rewardMatrix.getRewardValue(current);
                     qTable[current.getX()][current.getY()][3] = rewardMatrix.getRewardValue(current);
 
-                    System.out.println("Terminal State Found");
-                    agent.printQPolicy(qTable);
-                    System.out.println("\n");
+//                    System.out.println("Terminal State Found");
+//                    agent.printQPolicy(qTable);
+//                    System.out.println("\n");
                     break;
                 }
 
@@ -67,7 +65,7 @@ public class Program {
                 int action = agent.nextAction(qTable, current, epsilon);
 
 
-                // take action, get reward, and get next state s'
+                // take the action and get next state s'
                 Coordinate newState = agent.getNextState(current, action, intendedProb);
 
 
@@ -80,47 +78,46 @@ public class Program {
                 qTable[current.getX()][current.getY()][action] = newValue;
 
 
-                String prevAction = "";
-                if(action == Agent.UP) {
-                    prevAction = "UP";
-                }
-                else if(action == Agent.DOWN) {
-                    prevAction = "DOWN";
-                }
-                else if(action == Agent.LEFT) {
-                    prevAction = "LEFT";
-                }
-                else if(action == Agent.RIGHT) {
-                    prevAction = "RIGHT";
-                }
-                System.out.println("value for previous state " + current + " and action " + prevAction + " is " + newValue);
+//                String prevAction = "";
+//                if(action == Agent.UP) {
+//                    prevAction = "UP";
+//                }
+//                else if(action == Agent.DOWN) {
+//                    prevAction = "DOWN";
+//                }
+//                else if(action == Agent.LEFT) {
+//                    prevAction = "LEFT";
+//                }
+//                else if(action == Agent.RIGHT) {
+//                    prevAction = "RIGHT";
+//                }
+//                System.out.println("value for previous state " + current + " and action " + prevAction + " is " + newValue);
 
                 // set old state to new state
                 current = newState;
 
-                iterationNum++;
+//                iterationNum++;
+                // checks if there is still time left
                 TIME_LEFT = (System.nanoTime() - startTime)/(1000000000) <= MAXRUNTIME;
-            }
+            } // end of terminal state while loop
 
 
 
 
-
+            // checks if there is still time left
             TIME_LEFT = (System.nanoTime() - startTime)/(1000000000) <= MAXRUNTIME;
-        }
+        } // end of time left while loop
 
+        System.out.println("Q Learning Algorithm Successfully Ended");
 
-
-        // after completed, print out the Q-Learning Policy
-        // ^ > < v
+        /*
+            after completed, print out the Q-Learning Policy:
+            UP = ^
+            DOWN = v
+            LEFT = <
+            RIGHT = >
+         */
         agent.printQPolicy(qTable);
-
-
-
-
-
-
-
     }
 
 

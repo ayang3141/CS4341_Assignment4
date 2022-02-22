@@ -10,20 +10,22 @@ public class Coordinate {
         this.y = y;
     }
 
-    // This method retrieves the X coordinate
+    // retrieves the X coordinate
     public int getX() {
         return x;
     }
 
-    // This method retrieves the Y coordinate
+    // retrieves the Y coordinate
     public int getY() {
         return y;
     }
 
+    // checks if two coordinates are equal
     public boolean equals(Coordinate c2) {
         return (this.x == c2.x) && (this.y == c2.y);
     }
 
+    // puts the coordinate object in a readable format
     public String toString() {
         return "(" + this.x + "," + this.y + ")";
     }

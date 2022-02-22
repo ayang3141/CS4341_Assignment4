@@ -15,7 +15,7 @@ public class Agent {
 
 
 
-    // Get the coordinates of some number of spaces in front of the Agent
+    // Get the coordinates of some number of spaces to the right of the Agent
     public Coordinate getRightSpace(Coordinate oldPosition) {
         Coordinate newPosition = new Coordinate(oldPosition.getX(), oldPosition.getY() + 1);
         if(checkSpace(newPosition)) {
@@ -24,7 +24,7 @@ public class Agent {
         return oldPosition;
     }
 
-    // Get the coordinates of some number of spaces in front of the Agent
+    // Get the coordinates of some number of spaces to the left of the Agent
     public Coordinate getLeftSpace(Coordinate oldPosition) {
         Coordinate newPosition = new Coordinate(oldPosition.getX(), oldPosition.getY() - 1);
         if(checkSpace(newPosition)) {
@@ -33,6 +33,7 @@ public class Agent {
         return oldPosition;
     }
 
+    // Get the coordinates of some number of spaces above the Agent
     public Coordinate getUpSpace(Coordinate oldPosition) {
         Coordinate newPosition = new Coordinate(oldPosition.getX() - 1, oldPosition.getY());
         if(checkSpace(newPosition)) {
@@ -41,6 +42,7 @@ public class Agent {
         return oldPosition;
     }
 
+    // Get the coordinates of some number of spaces below the Agent
     public Coordinate getDownSpace(Coordinate oldPosition) {
         Coordinate newPosition = new Coordinate(oldPosition.getX() + 1, oldPosition.getY());
         if(checkSpace(newPosition)) {
@@ -49,6 +51,7 @@ public class Agent {
         return oldPosition;
     }
 
+    // Get the next state given an action and a deflection probability
     public Coordinate getNextState(Coordinate oldPosition, int action, double intendedProb) {
         Random random = new Random();
         int deflection = -1;
@@ -106,7 +109,8 @@ public class Agent {
         return null;
     }
 
-    public int nextAction(double[][][] qTable, Coordinate current, double epsilon ) {
+    // determine the best action to take at the current position given an epsilon probability
+    public int nextAction(double[][][] qTable, Coordinate current, double epsilon) {
         int actionToTake = -1;
         Random random = new Random();
         if(random.nextDouble() <= epsilon) { // take a random action
@@ -126,7 +130,7 @@ public class Agent {
         return actionToTake;
     }
 
-    // This method checks if the coordinate is a valid position
+    // This method checks if the coordinate is a valid position on the board
     public boolean checkSpace(Coordinate coordinate) {
         if(this.rewardMatrix.OutOfBounds(coordinate)) {
             return false;
@@ -134,6 +138,13 @@ public class Agent {
         return true;
     }
 
+    /*
+        Print out the Q-Learning Policy:
+        UP = ^
+        DOWN = v
+        LEFT = <
+        RIGHT = >
+     */
     public void printQPolicy(double[][][] qTable) {
         int numRows = qTable.length;
         int numCols = qTable[0].length;

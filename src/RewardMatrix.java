@@ -2,32 +2,36 @@ import java.io.*;
 import java.util.*;
 import java.lang.*;
 
-
 public class RewardMatrix {
+    // This class is responsible for handling the reward matrix and any related methods
 
-    int numRows;
-    int numCols;
-    double[][] rewardMatrix = new double[numRows][numCols];
-    List<Coordinate> terminalList = new ArrayList<Coordinate>();
-    String fileName;
+    // useful variables
+    int numRows;    // number of rows in the matrix
+    int numCols;    // number of columns in the matrix
+    double[][] rewardMatrix = new double[numRows][numCols]; // reward matrix array
+    String fileName;    // name of the board text file
 
+    // constructor for the RewardMatrix class
     public RewardMatrix(String fileName) {
         this.fileName = fileName;
     }
 
+    // retrieves the number of rows in the matrix
     public int getNumRows() {
         return this.numRows;
     }
 
+    // retrieves the number of columns in the matrix
     public int getNumCols() {
         return this.numCols;
     }
 
+    // gets the reward of the respective coordinate on the board
     public double getRewardValue(Coordinate coordinate) {
         return this.rewardMatrix[coordinate.getX()][coordinate.getY()];
     }
 
-    // This method determines if the given coordinate is out of bounds
+    // determines if the given coordinate is out of bounds
     public boolean OutOfBounds(Coordinate coordinate) {
         if((coordinate.getX() >= 0) && (coordinate.getX() <= numRows-1)
                 && (coordinate.getY() >= 0) && (coordinate.getY() <= numCols-1)) {
@@ -36,10 +40,12 @@ public class RewardMatrix {
         return true;
     }
 
+    // checks if the given coordinate is a terminal state
     public boolean checkTerminal(Coordinate position) {
         return getRewardValue(position) != 0;
     }
 
+    // randomly generates a starting position on the board that is not a terminal state
     public Coordinate generateStartPoint() {
         Random random = new Random();
         int x = random.nextInt(this.numRows);
