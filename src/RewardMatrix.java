@@ -73,8 +73,8 @@ public class RewardMatrix {
             numRows++;
         }
 
-        System.out.println(numCols);
-        System.out.println(numRows);
+//        System.out.println(numCols);
+//        System.out.println(numRows);
 
         Scanner sc = new Scanner(levelFile);
         sc.useDelimiter("\\n|\\t");

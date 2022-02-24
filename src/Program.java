@@ -74,7 +74,7 @@ public class Program {
                 double oldValue = qTable[current.getX()][current.getY()][action];
                 double maxNextActionScore = Math.max(Math.max(qTable[newState.getX()][newState.getY()][Agent.UP], qTable[newState.getX()][newState.getY()][Agent.DOWN]),
                         Math.max(qTable[newState.getX()][newState.getY()][Agent.LEFT], qTable[newState.getX()][newState.getY()][Agent.RIGHT]));
-                double newValue = oldValue + stepSize * (actionReward + rewardMatrix.getRewardValue(newState) + discount * maxNextActionScore - oldValue);
+                double newValue = oldValue + stepSize * (actionReward + discount * maxNextActionScore - oldValue);
                 qTable[current.getX()][current.getY()][action] = newValue;
 
 
